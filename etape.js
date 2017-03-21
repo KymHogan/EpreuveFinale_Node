@@ -140,10 +140,8 @@ app.get('/ajoutPlusieurs',  (req, res, next) => {
 		var obj;
 		fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
 			if(err) return console.error(err);
-			obj = JSON.parse(data);
-			console.log(obj);
 
-			//db.collection('adresse').insertMany(JSON.parse(data));
+			db.collection('adresse').insertMany(JSON.parse(data));
 
 			//db.collection('adresse').insertMany([{code:"NF",nom:"Terre-Neuve",capital:"St-john"},{code:"IPE",nom:"Ile du Prince-Édouard ",capital:"Charlottetown"}]);
 		});
