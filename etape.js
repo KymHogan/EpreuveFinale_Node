@@ -101,6 +101,17 @@ app.get('/collection',  (req, res, next) => {
 });
 
 //Fonctionne
+app.get('/ajout',  (req, res, next) => {
+	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
+      if(err) return next(err);
+      // renders index.ejs
+      // affiche le contenu de la BD 
+      res.render('index.ejs', {adresse: resultat});
+    })
+    console.log("ajout");
+});
+
+//Fonctionne
 app.get('/detruire',  (req, res, next) => {
 	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
       if(err) return next(err);
