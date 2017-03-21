@@ -105,7 +105,7 @@ app.get('/detruire',  (req, res, next) => {
 	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
       if(err) return next(err);
 
-      //db.collection('adresse').deleteMany()
+      db.collection('adresse').deleteMany()
 
       // renders index.ejs
       // affiche le contenu de la BD 
