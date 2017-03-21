@@ -100,7 +100,7 @@ app.get('/collection',  (req, res, next) => {
     })
 });
 
-//Fonctionne
+//Fonctionne MAIS ne réaffiche pas
 app.get('/ajout',  (req, res, next) => {
 	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
       if(err) return next(err);
@@ -117,7 +117,6 @@ app.get('/ajout',  (req, res, next) => {
       // affiche le contenu de la BD 
       res.render('index.ejs', {adresse: resultat});
     })
-    console.log("ajout");
 });
 
 //Fonctionne
@@ -133,7 +132,7 @@ app.get('/detruire',  (req, res, next) => {
     })
 });
 
-/*
+
 app.get('/ajoutPlusieurs',  (req, res, next) => {
 	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
     	if(err) return next(err);
@@ -143,8 +142,11 @@ app.get('/ajoutPlusieurs',  (req, res, next) => {
 			if(err) return console.error(err);
 			obj = JSON.parse(data);
 			console.log(obj);
-			db.collection('adresse').insertMany([{"code":"NF","nom":"Terre-Neuve","capital":"St-john"},{"code":"IPE","nom":"Ile du Prince-Édouard ","capital":"Charlottetown"},{"code":"NS","nom":"Nouvelle Écosse","capital":"Halifax"},{"code":"NB","nom":"Nouveau-Brunswick","capital":"Fredericton"},{"code":"QC","nom":"Québec","capital":"Québec"},{"code":"ON","nom":"Ontario","capital":"Toronto"},{"code":"MA","nom":"Manitoba","capital":"Winipeg"},{"code":"SK","nom":"Saskatshewan","capital":"Regina"},{"code":"AL","nom":"Alberta","capital":"Edmonton"},{"code":"BC","nom":"Colombie Britannique","capital":"Victoria"},{"code":"NU","nom":"Nunavut","capital":"Igaluit"},{"code":"YT","nom":"Yukon","capital":"Whitehorse"},{"code":"NT","nom":"Territoire du Nord-Ouest","capital":"Yellowknife"}]);
+
+			//db.collection('adresse').insertMany(JSON.parse(data));
+
+			//db.collection('adresse').insertMany([{code:"NF",nom:"Terre-Neuve",capital:"St-john"},{code:"IPE",nom:"Ile du Prince-Édouard ",capital:"Charlottetown"}]);
 		});
 	})
 });
-*/
+
