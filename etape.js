@@ -64,6 +64,7 @@ app.get('/',  (req, res, next) => {
 
 
 app.get('/fichier',  (req, res, next) => {
+	/*
 	console.log("fichier");
 	var obj;
 	fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
@@ -74,11 +75,10 @@ app.get('/fichier',  (req, res, next) => {
 		res.render('index.ejs', {adresse: obj});
 		//res.write(obj);
 	});
+	*/
 });
 
 app.get('/provinces',  (req, res, next) => {
-	/*
-	console.log("fichier");
 	var obj;
 	fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
 		if(err) return console.error(err);
@@ -87,5 +87,4 @@ app.get('/provinces',  (req, res, next) => {
 
 		res.render('index.ejs', {adresse: obj});
 	});
-	*/
 });
