@@ -11,18 +11,23 @@
   	  	<h1>Épreuve finale volet II - Programmation et veille technologique</h1>
   	  	<h2>Node.js, Express, MongoDB, EJS</h2>
   	  	<nav>
-
-  	  		<a href="#">1-Fichier</a>
-  	  		<a href="#">2-Provinces</a>
-  	  		<a href="#">3-Collection</a>
-  	  		<a href="#">4-Ajouter un document</a>
-  	  		<a href="#">5-Détruire</a>
-  	  		<a href="#">6-Ajouter plusieurs</a>
+  	  		<a href="/fichier">1-Fichier</a>
+  	  		<a href="/provinces">2-Provinces</a>
+  	  		<a href="/collection">3-Collection</a>
+  	  		<a href="/ajout">4-Ajouter un document</a>
+  	  		<a href="/detruire">5-Détruire</a>
+  	  		<a href="/ajoutPlusieurs">6-Ajouter plusieurs</a>
   	  	<nav>
   	  </header>
   	  <main>
 		  <table class="tableau">
-        ----------------------------------------
+        <% for(var i=0; i<adresse.length; i++) {%>
+          <tr class="client">
+            <td><%= adresse[i].code %></td>
+            <td><%= adresse[i].nom %></td> 
+            <td><%= adresse[i].capital %></td> 
+          </tr>
+        <% } %>
 		  </table>
 	  </main>
 	  <footer>

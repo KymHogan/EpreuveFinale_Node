@@ -12,48 +12,80 @@ app.use(bodyParser.json())  // pour traiter les données JSON
 
 console.log("Ça marche!");
 
-
-var obj;
-fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
-	if(err) return console.error(err);
-	obj = JSON.parse(data);
-	console.log(obj.toString());
-});
+/* ================= lecture json ==================== */
 
 
+/* ================================================== */
+
+var db // variable qui contiendra le lien sur la BD
+
+MongoClient.connect('mongodb://127.0.0.1/carnet_adresse', (err, database) => {
+  if (err) return console.log(err)
+  db = database
+  app.listen(8081, () => {
+    console.log('connexion à la BD et on écoute sur le port 8081')
+  })
+})
+
+/*
 app.get('/',  (req, res) => {
-   console.log('la route route get / = ' + req.url);
+   console.log('la route route get / = ' + req.url)
  
+    var cursor = db.collection('adresse').find().toArray(function(err, resultat){
+       if (err) return console.log(err)
     // renders index.ejs
-    res.render('index.ejs');
+    // affiche le contenu de la BD
+    res.render('index.ejs', {adresse: resultat})
+
+    })   
+
+})
+*/
+
+// va chercher le form de la collection adresse et affiche le contenu de la bdd
+app.get('/',  (req, res, next) => {
+    /*var cursor = db.collection('adresse').find().toArray(function(err, resultat){
+      if(err) return next(err);
+	    var obj;
+		fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
+			if(err) return console.error(err);
+			obj = JSON.parse(data);
+			console.log(obj);
+			//res.send(obj.toString());
+			res.render('index.ejs', {adresse: obj});
+		});
+      // renders index.ejs
+      // affiche le contenu de la BD 
+      //res.render('index.ejs', {adresse: resultat});
+    }) */
+
+	res.render('index.ejs', {adresse: res});
 })
 
 
-/*
-function ecritureTableauProvince(){
+app.get('/fichier',  (req, res, next) => {
+	console.log("fichier");
+	var obj;
+	fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
+		if(err) return console.error(err);
+		obj = JSON.parse(data);
+		console.log(obj);
+		//res.send(obj.toString());
+		res.render('index.ejs', {adresse: obj});
+		//res.write(obj);
+	});
+});
 
-	var sChaine = "";
+app.get('/provinces',  (req, res, next) => {
+	/*
+	console.log("fichier");
+	var obj;
+	fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
+		if(err) return console.error(err);
+		obj = JSON.parse(data);
+		console.log(obj);
 
-	sChaine += "<h1>Tableau de provinces</h1>";
-	sChaine += "<table>";
-	for (province in obj){
-
-		sChaine += "<tr><td>" + province + "</td><td>" + obj[province].toString() + "</td></tr>";
-	}
-	sChaine += "</table>";
-
-	return sChaine;
-}
-*/
-/*
-http.createServer(function(request, response) {
-  response.writeHead(200, {"Content-Type": "text/html; charset=utf8"});
-  //response.write("<style>table {border-collapse: collapse;}table, th, td {border: 1px solid black;}td {padding:3%;}</style>");
-
-  //response.write(ecritureTableauProvince());	
-
-  response.end(); 
-}).listen(8888);
-*/
-
-console.log("Program Ended");
+		res.render('index.ejs', {adresse: obj});
+	});
+	*/
+});
