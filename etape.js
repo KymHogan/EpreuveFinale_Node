@@ -104,6 +104,15 @@ app.get('/collection',  (req, res, next) => {
 app.get('/ajout',  (req, res, next) => {
 	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
       if(err) return next(err);
+
+      var capitalChiffre = Math.floor((Math.random()*100))+100;
+
+      db.collection('adresse').insertOne({
+			"code" : "QC",
+			"nom" : "Québec",
+			"capital": capitalChiffre
+      })
+
       // renders index.ejs
       // affiche le contenu de la BD 
       res.render('index.ejs', {adresse: resultat});
