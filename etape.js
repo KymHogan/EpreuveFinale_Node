@@ -9,15 +9,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static('public'))  // pour utiliser le dossier public
 app.use(bodyParser.json())  // pour traiter les données JSON
 
-
-console.log("Ça marche!");
-
-/* ================= lecture json ==================== */
-
-
-/* ================================================== */
-
-var db // variable qui contiendra le lien sur la BD
+var db 
 
 MongoClient.connect('mongodb://127.0.0.1/carnet_adresse', (err, database) => {
   if (err) return console.log(err)
@@ -27,124 +19,73 @@ MongoClient.connect('mongodb://127.0.0.1/carnet_adresse', (err, database) => {
   })
 })
 
-/*
-app.get('/',  (req, res) => {
-   console.log('la route route get / = ' + req.url)
- 
-    var cursor = db.collection('adresse').find().toArray(function(err, resultat){
-       if (err) return console.log(err)
-    // renders index.ejs
-    // affiche le contenu de la BD
-    res.render('index.ejs', {adresse: resultat})
-
-    })   
-
-})
-*/
-
-// va chercher le form de la collection adresse et affiche le contenu de la bdd
 app.get('/',  (req, res, next) => {
-    /*var cursor = db.collection('adresse').find().toArray(function(err, resultat){
-      if(err) return next(err);
-	    var obj;
-		fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
-			if(err) return console.error(err);
-			obj = JSON.parse(data);
-			console.log(obj);
-			//res.send(obj.toString());
-			res.render('index.ejs', {adresse: obj});
-		});
-      // renders index.ejs
-      // affiche le contenu de la BD 
-      //res.render('index.ejs', {adresse: resultat});
-    }) */
-
-	res.render('index.ejs', {adresse: res});
+    res.redirect('/collection');
 })
-
 
 app.get('/fichier',  (req, res, next) => {
-	/*
-	console.log("fichier");
 	var obj;
 	fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
-		if(err) return console.error(err);
-		obj = JSON.parse(data);
-		console.log(obj);
-		//res.send(obj.toString());
-		res.render('index.ejs', {adresse: obj});
-		//res.write(obj);
+	if(err) return console.error(err);
+	obj = JSON.parse(data);
+	console.log(obj);
+	res.send(obj)
+	res.render('index.ejs', {adresse: res});
 	});
-	*/
 });
 
-//Fonctionne
 app.get('/provinces',  (req, res, next) => {
 	var obj;
 	fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
 		if(err) return console.error(err);
 		obj = JSON.parse(data);
 		console.log(obj);
-
 		res.render('index.ejs', {adresse: obj});
 	});
 });
 
-//Fonctionne
 app.get('/collection',  (req, res, next) => {
 	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
       if(err) return next(err);
-      // renders index.ejs
-      // affiche le contenu de la BD 
       res.render('index.ejs', {adresse: resultat});
     })
 });
 
-//Fonctionne MAIS ne réaffiche pas
 app.get('/ajout',  (req, res, next) => {
 	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
       if(err) return next(err);
-
       var capitalChiffre = Math.floor((Math.random()*100))+100;
-
       db.collection('adresse').insertOne({
 			"code" : "QC",
 			"nom" : "Québec",
 			"capital": capitalChiffre
       })
-
-      // renders index.ejs
-      // affiche le contenu de la BD 
       res.render('index.ejs', {adresse: resultat});
     })
+    res.redirect('/collection');
 });
 
-//Fonctionne
 app.get('/detruire',  (req, res, next) => {
 	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
       if(err) return next(err);
-
       db.collection('adresse').deleteMany()
-
-      // renders index.ejs
-      // affiche le contenu de la BD 
-      res.render('index.ejs', {adresse: resultat});
     })
+    res.redirect('/collection');
 });
 
 
 app.get('/ajoutPlusieurs',  (req, res, next) => {
 	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
     	if(err) return next(err);
-
 		var obj;
 		fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
 			if(err) return console.error(err);
+			obj = JSON.parse(data);
+			console.log(obj);
 
 			db.collection('adresse').insertMany(JSON.parse(data));
-
-			//db.collection('adresse').insertMany([{code:"NF",nom:"Terre-Neuve",capital:"St-john"},{code:"IPE",nom:"Ile du Prince-Édouard ",capital:"Charlottetown"}]);
 		});
 	})
+	res.redirect('/collection');
 });
 
