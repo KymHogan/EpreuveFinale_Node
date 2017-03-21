@@ -78,6 +78,7 @@ app.get('/fichier',  (req, res, next) => {
 	*/
 });
 
+//Fonctionne
 app.get('/provinces',  (req, res, next) => {
 	var obj;
 	fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
@@ -89,6 +90,7 @@ app.get('/provinces',  (req, res, next) => {
 	});
 });
 
+//Fonctionne
 app.get('/collection',  (req, res, next) => {
 	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
       if(err) return next(err);
@@ -97,30 +99,32 @@ app.get('/collection',  (req, res, next) => {
       res.render('index.ejs', {adresse: resultat});
     })
 });
-/*
-app.get('/ajoutPlusieurs',  (req, res, next) => {
+
+//Fonctionne
+app.get('/detruire',  (req, res, next) => {
 	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
       if(err) return next(err);
 
-    var obj;
-	fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
-	if(err) return console.error(err);
-	obj = JSON.parse(data);
+      //db.collection('adresse').deleteMany()
 
-    db.collection.insertMany(obj);
+      // renders index.ejs
+      // affiche le contenu de la BD 
+      res.render('index.ejs', {adresse: resultat});
+    })
 });
-*/
-/*
-app.post('/ajout',  (req, res, next) => {
-  const newRecord = {
-    'code': req.body.create.nom, 
-    'nom': req.body.create.prenom, 
-    'capital': req.body.create.telephone
-  };
 
-  db.collection('adresse').insertOne(newRecord, (err, resultat) => {
-    if(err) return next(err);
-    res.send({ "id": resultat.insertedId });
-  }); 
+/*
+app.get('/ajoutPlusieurs',  (req, res, next) => {
+	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
+    	if(err) return next(err);
+
+		var obj;
+		fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
+			if(err) return console.error(err);
+			obj = JSON.parse(data);
+			console.log(obj);
+			db.collection('adresse').insertMany([{"code":"NF","nom":"Terre-Neuve","capital":"St-john"},{"code":"IPE","nom":"Ile du Prince-Édouard ","capital":"Charlottetown"},{"code":"NS","nom":"Nouvelle Écosse","capital":"Halifax"},{"code":"NB","nom":"Nouveau-Brunswick","capital":"Fredericton"},{"code":"QC","nom":"Québec","capital":"Québec"},{"code":"ON","nom":"Ontario","capital":"Toronto"},{"code":"MA","nom":"Manitoba","capital":"Winipeg"},{"code":"SK","nom":"Saskatshewan","capital":"Regina"},{"code":"AL","nom":"Alberta","capital":"Edmonton"},{"code":"BC","nom":"Colombie Britannique","capital":"Victoria"},{"code":"NU","nom":"Nunavut","capital":"Igaluit"},{"code":"YT","nom":"Yukon","capital":"Whitehorse"},{"code":"NT","nom":"Territoire du Nord-Ouest","capital":"Yellowknife"}]);
+		});
+	})
 });
 */
