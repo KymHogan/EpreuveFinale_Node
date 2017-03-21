@@ -88,3 +88,39 @@ app.get('/provinces',  (req, res, next) => {
 		res.render('index.ejs', {adresse: obj});
 	});
 });
+
+app.get('/collection',  (req, res, next) => {
+	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
+      if(err) return next(err);
+      // renders index.ejs
+      // affiche le contenu de la BD 
+      res.render('index.ejs', {adresse: resultat});
+    })
+});
+/*
+app.get('/ajoutPlusieurs',  (req, res, next) => {
+	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
+      if(err) return next(err);
+
+    var obj;
+	fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
+	if(err) return console.error(err);
+	obj = JSON.parse(data);
+
+    db.collection.insertMany(obj);
+});
+*/
+/*
+app.post('/ajout',  (req, res, next) => {
+  const newRecord = {
+    'code': req.body.create.nom, 
+    'nom': req.body.create.prenom, 
+    'capital': req.body.create.telephone
+  };
+
+  db.collection('adresse').insertOne(newRecord, (err, resultat) => {
+    if(err) return next(err);
+    res.send({ "id": resultat.insertedId });
+  }); 
+});
+*/
